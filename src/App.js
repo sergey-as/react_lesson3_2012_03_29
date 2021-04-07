@@ -41,9 +41,9 @@ const App = () => {
     }
 
 
-    // React.useEffect(() => {
-    //     console.log('did mount parent');
-    // }, []);
+    React.useEffect(() => {
+        console.log('did mount parent');
+    }, []);
 
     React.useEffect(() => {
         //2
@@ -56,7 +56,7 @@ const App = () => {
     return (
         <>
             <h1 onClick={incCounter}>HELLO react {counter}</h1>
-            {/*{!!(counter % 2) && <Comp/>}*/}
+            {!!(counter % 2) && <Comp/>}
         </>
 
     )

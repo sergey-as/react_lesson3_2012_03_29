@@ -1,16 +1,20 @@
 import React from 'react';
 
-// let interval;
+let interval;
 
 const Comp = () => {
 
+    // React.useEffect(() => {
+    //     console.log('did mount child');
+    // }, []);
 
     React.useEffect(() => {
-        console.log('did mount child');
-    }, []);
+        interval = setInterval(() => {
+            console.log('fetching new data about airplanes');
+        }, 2000);
 
-    React.useEffect(() => {
-        return () => console.log('will Unmount child');
+        // return () => console.log('will Unmount child');
+        return () => clearInterval(interval);
     }, []);
 
     return (
