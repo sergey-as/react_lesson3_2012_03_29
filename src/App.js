@@ -1,36 +1,59 @@
+// lifecycle
+// didmount, useEffect as mount
+// fetch json placeholder example
+// didupdate, useEffect as update
+// fetch json placeholder example with counter
+// willUnmount, useEffect as unmount
+
+
 // import React from "react";
 import React, {Component, useEffect, useState} from "react";
 import './App.css';
 import Comp from "./components/comp/Comp";
 
-const url = 'https://jsonplaceholder.typicode.com/todos';
+const url = 'https://jsonplaceholder.typicode.com/todos/';
 
 const App = () => {
-    const [counter, setCounter] = useState(0);
-    const [todos, setTodos] = useState([]);
+    const [counter, setCounter] = useState(1);
+    // const [todos, setTodos] = useState([]);
+    const [todo, setTodo] = useState(null);
+    const [isLoadin, setIsLoading] = useState(false);
 
     const incCounter = () => {
         setCounter(counter + 1);
     }
 
     const fetchTodos = async () => {
-        const response = await fetch(url);
+        setIsLoading(true);
+        const response = await fetch(`${url}${counter}`);
         const data = await response.json();
-        setTodos(data);
+        // setTimeout(() => {
+        // setTodos(data);
+        setTodo(data);
+        setIsLoading(false);
+        // }, 1500);
         console.log(data);
     }
 
     useEffect(() => {
         fetchTodos();
-    }, [])
+        return () => {
+            setTodo(null)
+        }
+    }, [counter])
 
     return (
         <>
             <h1 onClick={incCounter}>HELLO react {counter}</h1>
-            {!!todos.length && (
+
+            {/*{!todos.length && isLoadin && (<h1>LOADING DATA...</h1>)}*/}
+            {!todo && isLoadin && (<h1>LOADING DATA...</h1>)}
+
+            {/*{!!todos.length && (*/}
+            {!!todo && (
                 <>
                     <hr/>
-                    <h3>{todos[0].title} - {todos[0].completed.toString()}</h3>
+                    <h3>{todo.title} - {todo.completed.toString()} - {todo.id}</h3>
                     <hr/>
                 </>
             )}
